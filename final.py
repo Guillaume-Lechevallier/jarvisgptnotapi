@@ -5,6 +5,8 @@ import pygetwindow as gw
 import pyautogui
 import time  # Pour ajouter un délai
 
+from pytesseract import pytesseract
+
 
 def capture_chrome_window(title_contains):
     # Trouver toutes les fenêtres qui contiennent le titre donné
@@ -104,6 +106,27 @@ while True:
     time.sleep(5)
     # Utiliser une partie du titre de la fenêtre Chrome que vous souhaitez capturer
     capture_chrome_window("Google Chrome")
-
     # Remplacer 'chemin_vers_votre_image' par le chemin de votre fichier image
     supprimer_contour('chrome_window_capture.png', 200)
+
+    # Defining paths to tesseract.exe
+    # and the image we would be using
+    path_to_tesseract = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    image_path = r"chrome_window_capture.png"
+
+    # Opening the image & storing it in an image object
+    img = Image.open(image_path)
+
+
+    # Providing the tesseract executable
+    # location to pytesseract library
+    pytesseract.tesseract_cmd = path_to_tesseract
+
+    # Passing the image object to image_to_string() function
+    # This function will extract the text from the image
+    text = pytesseract.image_to_string(img)
+    img.close()
+
+    # Displaying the extracted text
+    print(text[:-1])
+    speak(text[:-1])
