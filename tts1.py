@@ -117,6 +117,7 @@ while True:
     # Opening the image & storing it in an image object
     img = Image.open(image_path)
 
+
     # Providing the tesseract executable
     # location to pytesseract library
     pytesseract.tesseract_cmd = path_to_tesseract
@@ -124,6 +125,7 @@ while True:
     # Passing the image object to image_to_string() function
     # This function will extract the text from the image
     text = pytesseract.image_to_string(img)
+    img.close()
 
     # Displaying the extracted text
     print(text[:-1])
